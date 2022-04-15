@@ -9,8 +9,7 @@
         <title>StoryTime </title>
         <link href="moz-extension://6de86387-081d-400c-96ba-2e32fcf69c81/styles/host.css" rel="stylesheet">
     </head>
-
-
+    <?php include "header.php"; ?>
     <body>
         
     </body>
