@@ -4,4 +4,22 @@
 	padding-top: 10px;
 }
 
+/* Faire un CSS pour la navbar et ajouter un padding-bottom pour séparer la navbar du reste du site*/
 
+#carte
+{
+	width : 30%;
+	height : 650px;
+
+}
+
+#photohistoire
+{
+	height : 650px;
+}
+.row
+{
+	justify-content: center;
+	margin: auto;
+	text-align: justify;
+}
