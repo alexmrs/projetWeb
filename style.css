@@ -1,3 +1,8 @@
+#navbar
+{
+	margin-bottom: 10px;
+}
+
 .apropos
 {
 	text-align: center;
@@ -21,4 +26,9 @@
 	justify-content: center;
 	margin: auto;
 	text-align: justify;
+}
+
+.centre
+{
+	text-align : center;
 }

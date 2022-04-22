@@ -8,7 +8,7 @@
         <title>À propos</title>
     </head>
 
-<?php include "header.php"; ?>
+<?php include "includes/header.php"; ?>
 
     <body>
     <div class="apropos">
@@ -20,4 +20,4 @@
     </div>
     </body>
 
-<?php include "footer.php"; ?>
+<?php include "includes/footer.php"; ?>
