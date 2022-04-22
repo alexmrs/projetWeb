@@ -1,10 +1,11 @@
 <?php 
+require_once "connect.php";
 require_once "includes/functions.php";
 session_start();
 if (!empty($_POST['login']) and !empty($_POST['password'])) {
     $login = $_POST['login'];
     $password = $_POST['password'];
-    $stmt = getDb()->prepare('select * from user where usr_login=? and usr_password=?');
+    $maRequete="SELECT * FROM utilisateurs WHERE ";
     $stmt->execute(array($login, $password));
     if ($stmt->rowCount() == 1) {
         // Authentication successful
