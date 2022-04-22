@@ -20,6 +20,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Administrateur</a>
+        </li>
       </ul>
     </div>
 
