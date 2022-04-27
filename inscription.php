@@ -25,20 +25,24 @@
         <div class="centre">
         <h1>Inscription</h1>
         <p>Inscrivez-vous pour accéder à toutes nos histoires.</p>
-        </div>
+        <br>
+        
 
-        <form>
-          <div class="mb-3">
-            <label for="pseudo" class="form-label">Pseudo</label>
-            <input type="text" class="form-control" id="pseudo" aria-describedby="pseudo">
-          </div>
-          <div class="mb-3">
-            <label for="mdp" class="form-label">Mot de passe</label>
-            <input type="password" class="form-control" id="mdp">
-          </div>
-          
-          <button type="submit" class="btn btn-info"> Valider </button>
+
+        <form action="inscription-validee.php" method="post">
+            <div class="mb-3">
+                <label for="pseudo" class="form-label">Pseudo</label>
+                <input type="text" class="form-control" id="pseudo" aria-describedby="pseudo">
+                <br>
+                <label for="mdp" class="form-label">Mot de passe</label>
+                <input type="password" class="form-control" id="mdp">
+                <br>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-info"> S'inscrire </button>
+            </div>
         </form>
+        </div>
         
 
     <?php include "includes/footer.php"; ?>
