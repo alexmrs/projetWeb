@@ -2,6 +2,7 @@
 require_once "includes/connect.php";
 require_once "includes/function.php";
 require_once "includes/header.php";
+session_start();
 
 // Vérifie que le mot de passe et identifiant entrés existent dans le formulaire
 if (!empty($_POST["pseudo"]) and !empty($_POST["mdp"])) {

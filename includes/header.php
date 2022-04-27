@@ -1,7 +1,6 @@
 <?php 
 require_once("connect.php");
 require_once("function.php");
-session_start();
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbar">
   <div class="container-fluid">
@@ -18,11 +17,11 @@ session_start();
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
             <?php 
-            $requete="SELECT titre FROM HISTOIRE"; // Peut-être que l'on va avoir besoin d'un autre moyen d'atteindre les histoires différamment,penser à changer au cas où
+            $requete="SELECT titre FROM HISTOIRE";
             $reponse=$BDD->prepare($requete);
             $reponse->execute(array());
             for($i=1;$i<= $reponse->rowCount();$i++){?>
-              <li><a class="dropdown-item" href="<?=$reponse[$i]?>.php"><?=$reponse[$i]?></a></li> <!--Commentaire précédent pour le href-->
+              <li><a class="dropdown-item" href="chapitre.php"><?=$reponse[$i]?></a></li> <!--Comment récupérer le numéro de chapitre? POST ? GET? faire du java?-->
             <?php }?>
             
             <li><a class="dropdown-item" href="#">Another action</a></li>
