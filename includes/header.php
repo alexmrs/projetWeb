@@ -1,3 +1,6 @@
+<?php 
+require_once("function.php");
+?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbar">
   <div class="container-fluid">
     <a class="navbar-brand" href="index.php">
@@ -12,30 +15,46 @@
             Toutes les histoires
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
+            <?php 
+            $requete="SELECT titre FROM HISTOIRE"; // Peut-être que l'on va avoir besoin d'un autre moyen d'atteindre les histoires différamment,penser à changer au cas où
+            $reponse=$BDD->prepare($requete);
+            $reponse->execute(array($requete));
+            for($i=1;$i<= $reponse->rowCount();$i++){?>
+              <li><a class="dropdown-item" href="<?=$reponse[$i]?>.php"><?=$reponse[$i]?></a></li> <!--Commentaire précédent pour le href-->
+            <?php }?>
+            
             <li><a class="dropdown-item" href="#">Another action</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
         </li>
+        <?php if(UtilisateurConnecte() and UtilisateurAdministrateur()){ ?>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Administrateur</a>
         </li>
+        <?php } ?>
       </ul>
     </div>
 
     <div class="navbar-right">
         <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Non connecté
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-            <li><a class="dropdown-item" href="connexion.php">Se connecter</a></li>
-            <li><a class="dropdown-item" href="inscription.php">Inscription</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Administrateur</a></li>
-          </ul>
+          <?php if(UtilisateurConnecte()){ // Vérifie si l'utilisateure est connecté ?>
+            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Bonjour, <?=$_SESSION['pseudo']?>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                <li><a class="dropdown-item" href="deconnexion.php">Déconnexion</a></li>
+              </ul>
+          <?php } else{ // Si non, menu de connexion ou d'inscription ?>
+            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Non connecté
+            </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                <li><a class="dropdown-item" href="connexion.php">Se connecter</a></li>
+                <li><a class="dropdown-item" href="inscription.php">Inscription</a></li>
+              </ul>
+            <?php } ?>
         </li>
       </ul>
     </div>

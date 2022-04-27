@@ -3,7 +3,7 @@
 // require_once("connexion_base.php");
 ?>
 
-<!DOCTYPE>
+<!doctype html>
 <html>
     <head>
         <meta charset="utf-8">
