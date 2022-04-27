@@ -1,18 +1,19 @@
 <?php 
 require_once "includes/connect.php";
 require_once "includes/function.php";
-session_start();
+require_once "includes/header.php";
 
 // Vérifie que le mot de passe et identifiant entrés existent dans le formulaire
 if (!empty($_POST["pseudo"]) and !empty($_POST["mdp"])) {
     $login = escape($_POST["pseudo"]); // récupère l'identifiant du formulaire de connexion
     $password = escape($_POST["mdp"]); // récupère le mot de passe du formulaire de connexion
-    $requete="SELECT * FROM utilisateurs WHERE pseudo=? AND mdp=?"; // requete SQL
+    $requete="SELECT * FROM utilisateur WHERE pseudo=? AND mdp=?"; // requete SQL
     $reponse=$BDD->prepare($requete); // preparation de la requête SQL
     $reponse->execute(array($login, $password)); // execute la requête et récupère la ligne avec login et password égaux à ceux rentrés si elle existe
     if ($reponse->rowCount() == 1) {
         // Identification réussie
-        $_SESSION["pseudo"] = $login; // variable super globale du 
+        $_SESSION["pseudo"] = $login; // variable super globale du pseudo
+        //$_SESSION["admin"] =$reponse["admin"];
         header("Location : index.php");
     }
     else {
@@ -24,8 +25,8 @@ if (!empty($_POST["pseudo"]) and !empty($_POST["mdp"])) {
 <html>
 
 <?php 
-$pageTitle = "Connexion";
-require_once "includes/header.php";
+$titrePage = "Connexion";
+
 ?>
 <?php if (isset($error)) { // Affiche un message d'erreur si le mot de passe ou le pseudo n'existe pas dans la BDD ?>
     <div class="alert alert-danger">
@@ -35,17 +36,17 @@ require_once "includes/header.php";
 
 <body>
     <div class="container">
-        <h2 class="text-center"><?= $pageTitle ?></h2>
+        <h2 class="text-center"><?= $titrePage ?></h2>
 
         <div class="well">
             <form role="form" action="connexion.php" method="post">
                 <div class="mb-3">
                     <label for="pseudo" class="form-label">Pseudo</label>
-                    <input type="text" class="form-control" id="pseudo" aria-describedby="pseudo" required>
+                    <input type="text" class="form-control" name="pseudo" aria-describedby="pseudo" required>
                 </div>
                 <div class="mb-3">
                     <label for="mdp" class="form-label">Mot de passe</label>
-                    <input type="password" class="form-control" id="mdp" required>
+                    <input type="password" class="form-control" name="mdp" required>
                 </div>
                 <div>
                     <button type="submit" class="btn btn-info"> Se Connecter </button>

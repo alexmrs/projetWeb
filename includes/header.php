@@ -1,5 +1,7 @@
 <?php 
+require_once("connect.php");
 require_once("function.php");
+session_start();
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbar">
   <div class="container-fluid">
@@ -18,7 +20,7 @@ require_once("function.php");
             <?php 
             $requete="SELECT titre FROM HISTOIRE"; // Peut-être que l'on va avoir besoin d'un autre moyen d'atteindre les histoires différamment,penser à changer au cas où
             $reponse=$BDD->prepare($requete);
-            $reponse->execute(array($requete));
+            $reponse->execute(array());
             for($i=1;$i<= $reponse->rowCount();$i++){?>
               <li><a class="dropdown-item" href="<?=$reponse[$i]?>.php"><?=$reponse[$i]?></a></li> <!--Commentaire précédent pour le href-->
             <?php }?>
@@ -39,15 +41,15 @@ require_once("function.php");
     <div class="navbar-right">
         <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
         <li class="nav-item dropdown">
-          <?php if(UtilisateurConnecte()){ // Vérifie si l'utilisateure est connecté ?>
-            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <?php if(UtilisateurConnecte()){ // Vérifie si l'utilisateur est connecté ?>
+            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown">
               Bonjour, <?=$_SESSION['pseudo']?>
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                 <li><a class="dropdown-item" href="deconnexion.php">Déconnexion</a></li>
               </ul>
           <?php } else{ // Si non, menu de connexion ou d'inscription ?>
-            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown">
               Non connecté
             </a>
               <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
