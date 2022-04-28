@@ -21,7 +21,7 @@ require_once("function.php");
             $reponse=$BDD->prepare($requete);
             $reponse->execute(array());
             for($i=1;$i<= $reponse->rowCount();$i++){?>
-              <li><a class="dropdown-item" href="chapitre.php"><?=$reponse[$i]?></a></li> <!--Comment récupérer le numéro de chapitre? POST ? GET? faire du java?-->
+              <li><a class="dropdown-item" href="chapitre.php"><?=$reponse[$i]?></a></li> <!--Comment récupérer le numéro de chapitre? POST ? GET? faire du java? nope requete PHP-->
             <?php }?>
             
             <li><a class="dropdown-item" href="#">Another action</a></li>
