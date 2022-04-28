@@ -15,13 +15,37 @@ require_once("includes/connect.php");
 		
         <link href="style.css" rel="stylesheet">
 
-        <title>StoryTime </title>
-        <link href="moz-extension://6de86387-081d-400c-96ba-2e32fcf69c81/styles/host.css" rel="stylesheet">
+        <title>StoryTime</title>
+        
     </head>
     <?php include "includes/header.php"; ?>
 
     <body>
 
+    <?php 
+    if (isset($_POST['pseudo']) && isset($_POST['email']) && isset($_POST['mdp']))
+	{
+	    $pseudo = $_POST['pseudo'];
+	    $email = $_POST['email'];
+	    $motdepasse = $_POST['mdp'];
+
+	    //$motdepasse_crypte = password_hash($motdepasse, PASSWORD_DEFAULT);
+	    
+
+	    //tester ici si le pseudo est le mail ne sont pas déjà utilisé
+	    
+	    $req = $BDD->prepare('INSERT INTO utilisateur (pseudo, email, mdp) VALUES (:pseudo, :email, :mdp)');
+		$req->execute(array(
+		'pseudo' => $pseudo,
+		'email' => $email,
+		'mdp' => $motdepasse, ));
+
+	    // $requete="INSERT INTO utilisateur (pseudo, email, mdp) VALUES (?, ?, ?)";
+	    // $reponse=$pdo->prepare($requete);
+	    // $reponse->execute(array($pseudo, $email, $motdepasse )); //changer par $motdepasse_crypte si ça fonctionne
+	    
+	  
+	}?>
 
     <?php include "includes/footer.php"; ?>
 

@@ -29,7 +29,7 @@ require_once("includes/connect.php");
         
 
 
-        <form action="inscription-validee.php" method="post">
+        <form action="inscription_verif.php" method="post">
             <div class="mb-3">
                 <label for="pseudo" class="form-label">Pseudo</label>
                 <input type="text" class="form-control" id="pseudo" aria-describedby="pseudo">
