@@ -24,8 +24,9 @@ require_once("includes/connect.php");
 
 		<?php unset($_SESSION['pseudo']);?>
 		<br/>
-		<h3> Vous êtes déconnecté(e).</h3>
-		<h6><a href="index.php" id="link"> Retour à la page d'accueil</a></h6>
+		<h3 class="centre"> Vous êtes déconnecté(e).</h3>
+        <br>
+		<h6 class="centre"><a href="index.php" id="link"> Retour à la page d'accueil</a></h6>
 
 		<?php require_once "includes/footer.php"; ?>
 		  <!-- Bootstrap -->
