@@ -45,8 +45,8 @@ require_once("function.php");
               Bonjour, <?=$_SESSION['pseudo']?>
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                <li><a class="dropdown-item" href="deconnexion.php">Déconnexion</a></li>
-              </ul>
+              <li><a class="dropdown-item" href="deconnexion.php">Déconnexion</a></li>
+            </ul>
           <?php } else{ // Si non, menu de connexion ou d'inscription ?>
             <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown">
               Non connecté

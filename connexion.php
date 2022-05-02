@@ -15,8 +15,6 @@ if (!empty($_POST["pseudo"]) and !empty($_POST["mdp"]))
     $requete="SELECT * FROM utilisateur WHERE pseudo=? AND mdp=?"; // requete SQL
     $reponse=$BDD->prepare($requete); // preparation de la requête SQL
     $reponse->execute(array($login, $password)); // execute la requête et récupère la ligne avec login et password égaux à ceux rentrés si elle existe
-
-    echo $pseudo;
     if ($reponse->rowCount() == 1)
     {
         // Identification réussie

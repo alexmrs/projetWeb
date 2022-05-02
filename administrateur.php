@@ -22,20 +22,29 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
+                <th scope="col">Titre</th>
+                <th scope="col">Auteur</th>
+                <th scope="col">Histoire lu</th>
+                <th scope="col">Gagné</th>
+                <th scope="col">Perdu</th>
                 </tr>
             </thead>
-    <?php 
-        $requete="SELECT * FROM HISTOIRE"; // Récupère toutes les informations concernant les histoires
-        $resultat=$BDD->prepare($requete); // Prépare la requête
-        $resultat->execute(array());
-        $tab=$resultat->fetchAll();
-        foreach($tab as $key => $ligne){?>
-            <li></li> 
-        <?php }?>
+            <tbody>
+                <?php 
+                    $requete="SELECT * FROM HISTOIRE"; // Requête SQL pour récupèrer toutes les informations concernant les histoires
+                    $resultat=$BDD->prepare($requete); // Prépare la requête
+                    $resultat->execute(array()); // Récupère toutes les informations concernant les histoires
+                    $tab=$resultat->fetchAll(); // Crée un tableau avec les informations 
+                    foreach($tab as $key => $ligne){ // Parcourt le tableau?> 
+                        <tr>
+                            <th scope="row"><?=$ligne["titre"]?></th>
+                            <td><?=$ligne["auteur"]?></td>
+                            <td><?=$ligne["nb_lecture"]?></td>
+                            <td><?=$ligne["nb_gagne"]?></td>
+                            <td><?=$ligne["nb_perdu"]?></td>
+                        </tr>
+                <?php }?>
+            </tbody>
         </table>
 <?php include "includes/footer.php"; ?>
 

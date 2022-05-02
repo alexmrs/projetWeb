@@ -2,7 +2,7 @@
 
 // Vérifie si l'utilisateur est connecté
 function UtilisateurConnecte() {
-    return isset($_SESSION['pseudo']);
+    return isset($_SESSION["pseudo"]);
 }
 
 // Verifie si l'utilisateur est un administrateur
