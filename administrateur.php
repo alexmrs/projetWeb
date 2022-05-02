@@ -16,18 +16,27 @@
     </head>
     <?php include "includes/header.php"; ?>
 
-
-    <!--Satististiques des histoires-->
-    <ul>
+    <body>
+        <!--Satististiques des histoires-->
+        <h2>Statistiques</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">Handle</th>
+                </tr>
+            </thead>
     <?php 
-        $requete="SELECT * FROM HISTOIRE";
-        $reponse=$BDD->prepare($requete);
-        $reponse->execute(array());
-        for($i=1;$i<= $reponse->rowCount();$i++){?>
+        $requete="SELECT * FROM HISTOIRE"; // Récupère toutes les informations concernant les histoires
+        $resultat=$BDD->prepare($requete); // Prépare la requête
+        $resultat->execute(array());
+        $tab=$resultat->fetchAll();
+        foreach($tab as $key => $ligne){?>
             <li></li> 
         <?php }?>
-    </ul>
-    <body>
+        </table>
 <?php include "includes/footer.php"; ?>
 
 <!-- Option 1: Bootstrap Bundle with Popper -->

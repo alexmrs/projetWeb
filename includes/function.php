@@ -7,7 +7,7 @@ function UtilisateurConnecte() {
 
 // Verifie si l'utilisateur est un administrateur
 function UtilisateurAdministrateur() {
-    return $_SESSION['utilisateur']==1;
+    return $_SESSION["admin"]==1;
 }
 
 // Protection contre l'ajout de code non voulu

@@ -29,9 +29,9 @@ require_once("function.php");
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
         </li>
-        <?php if(UtilisateurConnecte() and UtilisateurAdministrateur()){ ?>
+        <?php if(UtilisateurConnecte() and $_SESSION["admin"]==1){ ?>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Administrateur</a>
+          <a class="nav-link active" aria-current="page" href="administrateur.php">Administrateur</a>
         </li>
         <?php } ?>
       </ul>
