@@ -44,7 +44,9 @@ require_once("includes/connect.php");
 	  	$_SESSION['pseudo'] = $pseudo;
 	  ?>
 
-	  <h3 class="centre">Bienvenue <?php echo $pseudo;?> ! Vous allez être redirigé(e) vers la page accueil.</h3>
+	  <h3 class="centre">Bienvenue <?php echo $pseudo;?> !</h3>
+	  <br>
+	  <h5 class="centre"> Vous allez être redirigé(e) vers la page d'accueil automatiquement.</h5>
 	<?php }?>
 
 	<META http-EQUIV="Refresh" CONTENT="4; url=index.php">
