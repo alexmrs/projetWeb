@@ -27,7 +27,7 @@ if (!empty($_POST["pseudo"]) and !empty($_POST["mdp"]))
         
         ?> <META http-EQUIV="Refresh" CONTENT="2; url=index.php"> <?php
 
-
+    }
     else
     {
         $error = "Utilisateur non reconnu";
