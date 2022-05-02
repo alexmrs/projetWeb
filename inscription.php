@@ -32,13 +32,13 @@ require_once("includes/connect.php");
         <form action="inscription_verif.php" method="post">
             <div class="mb-3">
                 <label for="pseudo" class="form-label">Pseudo</label>
-                <input type="text" class="form-control" id="pseudo" aria-describedby="pseudo">
+                <input type="text" class="form-control" id="pseudo" name="pseudo" aria-describedby="pseudo">
                 <br>
                 <label for="email" class="form-label">Adresse email</label>
-                <input type="text" class="form-control" id="email" aria-describedby="adresse email">
+                <input type="text" class="form-control" id="email" name="email" aria-describedby="adresse email">
                 <br>
                 <label for="mdp" class="form-label">Mot de passe</label>
-                <input type="password" class="form-control" id="mdp">
+                <input type="password" class="form-control" id="mdp" name="mdp">
                 <br>
             </div>
             <div>

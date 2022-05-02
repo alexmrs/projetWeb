@@ -23,29 +23,31 @@ require_once("includes/connect.php");
     <body>
 
     <?php 
-    if (isset($_POST['pseudo']) && isset($_POST['email']) && isset($_POST['mdp']))
+    if (!empty($_POST['pseudo']) && !empty($_POST['email']) && !empty($_POST['mdp']))
 	{
 	    $pseudo = $_POST['pseudo'];
 	    $email = $_POST['email'];
-	    $motdepasse = $_POST['mdp'];
+	    $mdp = $_POST['mdp'];  //$motdepasse_crypte = password_hash($mdp, PASSWORD_DEFAULT);
 
-	    //$motdepasse_crypte = password_hash($motdepasse, PASSWORD_DEFAULT);
-	    
 
-	    //tester ici si le pseudo est le mail ne sont pas déjà utilisé
-	    
-	    $req = $BDD->prepare('INSERT INTO utilisateur (pseudo, email, mdp) VALUES (:pseudo, :email, :mdp)');
+	    //Option : tester ici si le pseudo est le mail ne sont pas déjà utilisé
+
+		$req = $BDD->prepare('INSERT INTO `utilisateur` (`pseudo`, `email`, `mdp`) VALUES (:pseudo, :email, :mdp)');
 		$req->execute(array(
 		'pseudo' => $pseudo,
-		'email' => $email,
-		'mdp' => $motdepasse, ));
-
-	    // $requete="INSERT INTO utilisateur (pseudo, email, mdp) VALUES (?, ?, ?)";
-	    // $reponse=$pdo->prepare($requete);
-	    // $reponse->execute(array($pseudo, $email, $motdepasse )); //changer par $motdepasse_crypte si ça fonctionne
-	    
+		'email' => $email, 
+		'mdp'=> $mdp)); //mettre $motdepasse_crypte si besoin et changer dans connexion la vérif du mot de passe
 	  
-	}?>
+	  	
+
+	  	//remplir la variable de session
+	  	$_SESSION['pseudo'] = $pseudo;
+	  ?>
+
+	  <h3>Bienvenue <?php echo $pseudo;?> ! Vous allez être redirigé(e) vers la page accueil.</h3>
+	<?php }?>
+
+	<META http-EQUIV="Refresh" CONTENT="4; url=index.php">
 
     <?php include "includes/footer.php"; ?>
 
