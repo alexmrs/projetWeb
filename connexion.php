@@ -25,7 +25,7 @@ if (!empty($_POST["pseudo"]) and !empty($_POST["mdp"]))
         $utilisateur=$reponse->fetch();
         $_SESSION["admin"] = $utilisateur["admin"];
         
-        ?> <META http-EQUIV="Refresh" CONTENT="2; url=index.php"> <?php
+        ?> <META http-EQUIV="Refresh" CONTENT="1; url=index.php"> <?php
 
     }
     else
@@ -47,30 +47,43 @@ $titrePage = "Connexion";
     </div>
 <?php } ?>
 
-<body>
-    <div class="container">
-        <h2 class="text-center"><?= $titrePage ?></h2>
+<head>
+        <meta charset="utf-8">
+        <link href="style.css" rel="stylesheet">
+        <title><?= $titrePage ?></title>
+</head>
 
-        <div class="well">
-            <form role="form" action="connexion.php" method="post">
-                <div class="mb-3">
-                    <label for="pseudo" class="form-label">Pseudo</label>
-                    <input type="text" class="form-control" name="pseudo" aria-describedby="pseudo" required>
-                </div>
-                <div class="mb-3">
-                    <label for="mdp" class="form-label">Mot de passe</label>
-                    <input type="password" class="form-control" name="mdp" required>
-                </div>
-                <div>
-                    <button type="submit" class="btn btn-info"> Se Connecter </button>
-                </div>
-            </form>
+<body>
+
+
+        <div class="centre">
+        <h1 class="text-center"><?= $titrePage ?></h1>
+        <p>Connectez-vous pour accéder à toutes nos histoires.</p>
+        <br>
+    
+
+        <form action="connexion.php" method="post" class="form">
+            <div class="mb-3">
+                <label for="pseudo" class="form-label">Pseudo</label>
+                <input type="text" class="form-control" id="pseudo" name="pseudo" aria-describedby="pseudo">
+                <br>
+                <label for="mdp" class="form-label">Mot de passe</label>
+                <input type="password" class="form-control" id="mdp" name="mdp">
+                <br>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-info"> Se connecter </button>
+            </div>
+        </form>
         </div>
+        
+
+
 
         <?php require_once "includes/footer.php"; ?>
-    </div>
-
    
+    <!-- Bootstrap -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 
 </body>
 
