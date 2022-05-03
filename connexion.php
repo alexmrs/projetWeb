@@ -11,7 +11,7 @@ if (!empty($_POST["pseudo"]) and !empty($_POST["mdp"]))
     $login = escape($_POST["pseudo"]); // récupère l'identifiant du formulaire de connexion
     $password = escape($_POST["mdp"]); // récupère le mot de passe du formulaire de connexion
 
-    //vériier le mdp crypté
+    //vérifie le mdp crypté
     $requete="SELECT * FROM utilisateur WHERE pseudo=? AND mdp=?"; // requete SQL
     $reponse=$BDD->prepare($requete); // preparation de la requête SQL
     $reponse->execute(array($login, $password)); // execute la requête et récupère la ligne avec login et password égaux à ceux rentrés si elle existe
@@ -22,7 +22,7 @@ if (!empty($_POST["pseudo"]) and !empty($_POST["mdp"]))
 
         $utilisateur=$reponse->fetch();
         $_SESSION["admin"] = $utilisateur["admin"];
-        
+        $_SESSION["idUtil"] = $utilisateur["id"];
         ?> <META http-EQUIV="Refresh" CONTENT="1; url=index.php"> <?php
 
     }

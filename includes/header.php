@@ -17,16 +17,13 @@ require_once("function.php");
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
             <?php 
-            $requete="SELECT titre FROM HISTOIRE";
-            $reponse=$BDD->prepare($requete);
-            $reponse->execute(array());
-            for($i=1;$i<= $reponse->rowCount();$i++){?>
-              <li><a class="dropdown-item" href="chapitre.php"><?=$reponse[$i]?></a></li> <!--Comment récupérer le numéro de chapitre? POST ? GET? faire du java? nope requete PHP-->
+             $requete="SELECT * FROM HISTOIRE"; // Requête SQL pour récupèrer toutes les informations concernant les histoires
+             $resultat=$BDD->prepare($requete); // Prépare la requête
+             $resultat->execute(array()); // Récupère toutes les informations concernant les histoires
+             $tab=$resultat->fetchAll(); // Crée un tableau avec les informations 
+             foreach($tab as $key => $ligne){ // Parcourt le tableau?> 
+              <li><a class="dropdown-item" <?php if(UtilisateurConnecte()){?>href="chapitre.php?titre=<?=$ligne['titre']?>" <?php } ?> ><?=$ligne["titre"]?></a></li> <!--Comment récupérer le numéro de chapitre? POST ? GET? faire du java? nope requete PHP-->
             <?php }?>
-            
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
         </li>
         <?php if(UtilisateurConnecte() and $_SESSION["admin"]==1){ ?>
