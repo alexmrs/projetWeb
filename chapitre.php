@@ -20,19 +20,51 @@
         <?php if(isset($_GET["titre"])){
             $_SESSION["titre"]=escape($_GET["titre"]);
             $requete="SELECT * FROM histoire WHERE titre=?"; // Requête SQL
-            $resultatIdHist=$BDD->prepare($requete); // Preparation de la requête SQL
-            $resultatIdHist->execute(array($_SESSION["titre"])); // Execute la requête 
-            $idHist=$resultatIdHist->fetch();
-            $_SESSION["idHist"]=$idHist["id"]; // Définit l'id de l'histoire entrain d'être lu
+            $resultatHist=$BDD->prepare($requete); // Preparation de la requête SQL
+            $resultatHist->execute(array($_SESSION["titre"])); // Execute la requête 
+            $histoire=$resultatHist->fetch();
+            $_SESSION["idHist"]=$histoire["id"]; // Définit l'id de l'histoire entrain d'être lu
 
-            $requete="SELECT * FROM progression WHERE id_utilisateur=? AND id_histoire=?"; // requête SQL
-            $resultatProgr=$BDD->prepare($requete); // preparation de la requête SQL
-            $resultatProgr->execute(array($_SESSION["idUtil"], $_SESSION["idHist"])); // execute la requête et récupère la ligne avec login et password égaux à ceux rentrés si elle existe
+            $requete="SELECT * FROM progression WHERE id_utilisateur=? AND id_histoire=?"; // Requête SQL
+            $resultatProgr=$BDD->prepare($requete); // Preparation de la requête SQL
+            $resultatProgr->execute(array($_SESSION["idUtil"], $_SESSION["idHist"])); // Execute la requête et récupère la ligne avec login et password égaux à ceux rentrés si elle existe
             $progressionHist=$resultatProgr->fetch();
-            $chapitreActuel=$progressionHist["id_chapitre"];
+
+            if($resultatProgr->rowCount()==0){
+                // Ajoute une ligne de progression pour l'histoire en question si l'utilisateur n'en a pas
+                $requeteAjout="INSERT INTO progression (id_utilisateur,id_histoire,id_chapitre) VALUES (:id_utilisateur,:id_histoire,id_chapitre)";
+                $resultatReq=$BDD->prepare($requeteAjout);
+                $resultatReq->execute(array(
+                    'id_utilisateur'=>$_SESSION["idUtil"],
+                    'id_histoire'=>$_SESSION["idHist"],
+                    'id_chapitre'=>1
+                ));
+                // Rajoute +1 au nombre de lecture de l'histoire pour les statistiques
+                $reqLecture="INSERT INTO histoire (nb_lecture) VALUES (:plusUn)";
+                $resultatReq=$BDD->prepare($reqLecture);
+                $resultatReq->execute(array('plusUn'=>$histoire["nb_lecture"]+1));
+                $chapitreActuel=1;
+            }
+            else{
+                $chapitreActuel=$progressionHist["id_chapitre"];
+            }
+            
+            // Récupère les données du chapitre en cours de lecture
+            $reqChap="SELECT * FROM chapitre WHERE id_histoire=? AND num_chapitre=?";
+            $resReqChap=$BDD->prepare($reqChap);
+            $resReqChap->execute(array($_SESSION["idHist"],$chapitreActuel));
+            $chapitre= $resReqChap->fetch();
+
+            // Récupère les choix possibles liés au chapitre
+            $reqChoix="SELECT * FROM choix WHERE id_chapitre=?";
+            $resReqChoix=$BDD->prepare($reqChoix);
+            $resReqChoix->execute(array($chapitre["id"]));
+            $choix= $resReqChoix->fetchAll();
         }?>
         <h1 class="centre"><?=$_SESSION["titre"] ?></h1>
-        <p></p>
+        <div class="centre">
+            <?=$chapitre["contenu"]?>
+        </div>
         
         
         
