@@ -12,42 +12,43 @@
 		
         <link href="style.css" rel="stylesheet">
 
-        <title>StoryTime</title>
+        <title>Administrateur</title>
         <link href="moz-extension://6de86387-081d-400c-96ba-2e32fcf69c81/styles/host.css" rel="stylesheet">
     </head>
     <?php include "includes/header.php"; ?>
 
     <body>
-        <!--Satististiques des histoires-->
-        <h2>Statistiques</h2>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                <th scope="col">Titre</th>
-                <th scope="col">Auteur</th>
-                <th scope="col">Histoire lu</th>
-                <th scope="col">Gagné</th>
-                <th scope="col">Perdu</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php 
-                    $requete="SELECT * FROM HISTOIRE"; // Requête SQL pour récupèrer toutes les informations concernant les histoires
-                    $resultat=$BDD->prepare($requete); // Prépare la requête
-                    $resultat->execute(array()); // Récupère toutes les informations concernant les histoires
-                    $tab=$resultat->fetchAll(); // Crée un tableau avec les informations 
-                    foreach($tab as $key => $ligne){ // Parcourt le tableau?> 
-                        <tr>
-                            <th scope="row"><?=$ligne["titre"]?></th>
-                            <td><?=$ligne["auteur"]?></td>
-                            <td><?=$ligne["nb_lecture"]?></td>
-                            <td><?=$ligne["nb_gagne"]?></td>
-                            <td><?=$ligne["nb_perdu"]?></td>
-                        </tr>
+
+    <div class="centre">
+        <h2>Espace administrateur</h2>
+        <br>
+        <a class="btn btn-primary btn-success" href="creation.php" role="button">Créer une histoire</a>
+        <a class="btn btn-primary btn-primary" href="statistique.php" role="button">Statistiques</a>
+    </div>
+
+    <br>
+
+        <div class="container"> <!-- ajouter un id pour le css -->
+            <ul class="list-group list-group-flush" id="admin">
+                <?php $requete="SELECT * FROM histoire"; // Requête SQL pour récupèrer toutes les informations concernant les histoires
+                $resultat=$BDD->prepare($requete); // Prépare la requête
+                $resultat->execute(array()); // Récupère toutes les informations concernant les histoires
+                $tab=$resultat->fetchAll(); // Crée un tableau avec les informations 
+                foreach($tab as $key => $ligne)
+                {?> <!-- // Parcourt le tableau      -->
+                    <li class="list-group-item">
+                        <?=$ligne["titre"]?>
+                        <div class="droite">
+                        <a class="btn btn-primary btn-success .justify-content-end" href="creation.php" role="button">Créer une histoire</a>
+                        <a class="btn btn-primary btn-primary" href="statistique.php" role="button">Statistiques</a>
+                        </div>
+                        </li>
                 <?php }?>
-            </tbody>
-        </table>
-<?php include "includes/footer.php"; ?>
+            </ul>
+        </div>
+
+       
+    <?php include "includes/footer.php"; ?>
 
 
     </body>

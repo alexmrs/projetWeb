@@ -2,7 +2,7 @@
 $host = "localhost";
 $dbname = "storytime";
 $username = "root";
-$password = "";
+$password = "root";
 
 try { 
     $BDD = new PDO( "mysql:host=". $host .";dbname=". $dbname .";charset=utf8",
