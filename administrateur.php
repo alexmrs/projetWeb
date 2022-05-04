@@ -20,16 +20,17 @@
     <body>
 
     <div class="centre">
-        <h2>Espace administrateur</h2>
+        <h1>Espace administrateur</h1>
         <br>
         <a class="btn btn-primary btn-success" href="creation.php" role="button">Créer une histoire</a>
         <a class="btn btn-primary btn-primary" href="statistique.php" role="button">Statistiques</a>
+
     </div>
 
     <br>
 
         <div class="container"> <!-- ajouter un id pour le css -->
-            <ul class="list-group list-group-flush" id="admin">
+            <ul class="list-group list-group-flush">
                 <?php $requete="SELECT * FROM histoire"; // Requête SQL pour récupèrer toutes les informations concernant les histoires
                 $resultat=$BDD->prepare($requete); // Prépare la requête
                 $resultat->execute(array()); // Récupère toutes les informations concernant les histoires
@@ -38,9 +39,10 @@
                 {?> <!-- // Parcourt le tableau      -->
                     <li class="list-group-item">
                         <?=$ligne["titre"]?>
+
                         <div class="droite">
-                        <a class="btn btn-primary btn-success .justify-content-end" href="creation.php" role="button">Créer une histoire</a>
-                        <a class="btn btn-primary btn-primary" href="statistique.php" role="button">Statistiques</a>
+                        <a class="btn btn-primary btn-warning" href="modifier.php" role="button">Modifier</a>
+                        <a class="btn btn-primary btn-danger" href="supprimer.php?id=<?=$ligne["id"]?>" role="button">Supprimer</a>
                         </div>
                         </li>
                 <?php }?>
