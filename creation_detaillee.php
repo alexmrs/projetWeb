@@ -15,7 +15,7 @@ require_once("includes/connect.php");
 		
         <link href="style.css" rel="stylesheet">
 
-        <title>StoryTime</title>
+        <title>Créez votre histoire</title>
         
     </head>
     <?php include "includes/header.php"; ?>
@@ -23,33 +23,33 @@ require_once("includes/connect.php");
     <body>
 
     <?php 
-    if (!empty($_POST['pseudo']) && !empty($_POST['email']) && !empty($_POST['mdp']))
+
+    $auteur = $_SESSION['pseudo'];
+
+    if (!empty($_POST['titre']) && !empty($_POST['description']))
 	{
-	    $pseudo = $_POST['pseudo'];
-	    $email = $_POST['email'];
-	    $mdp = $_POST['mdp'];  //$motdepasse_crypte = password_hash($mdp, PASSWORD_DEFAULT);
+	    $titre = $_POST['titre'];
+	    $description = $_POST['description'];
+	   
 
-
-	    //Option : tester ici si le pseudo est le mail ne sont pas déjà utilisé
-
-		$req = $BDD->prepare('INSERT INTO `utilisateur` (`pseudo`, `email`, `mdp`) VALUES (:pseudo, :email, :mdp)');
+		$req = $BDD->prepare("INSERT INTO histoire (titre, auteur, description) VALUES (:titre, :auteur, :description)");
 		$req->execute(array(
-		'pseudo' => $pseudo,
-		'email' => $email, 
-		'mdp'=> $mdp)); //mettre $motdepasse_crypte si besoin et changer dans connexion la vérif du mot de passe
-	  
-	  
+		'titre' => $titre,
+		'auteur' => $auteur, 
+		'description'=> $description)); 
 
-	  	//remplir la variable de session
-	  	$_SESSION['pseudo'] = $pseudo;
-	  ?>
+	 ?>
 
-	  <h3 class="centre">Bienvenue <?php echo $pseudo;?> !</h3>
-	  <br>
-	  <h5 class="centre"> Vous allez être redirigé(e) vers la page d'accueil automatiquement.</h5>
-	<?php }?>
+	  <h3 class="centre">L'histoire "<?php echo $titre;?>" a bien été créée !</h3>
+	 <?php }
 
-	<META http-EQUIV="Refresh" CONTENT="4; url=index.php">
+	 else 
+	 {?>
+	 	<br>
+	 	<h2 class="centre">Veuillez saisir un titre et une description.</h2>
+	 	<META http-EQUIV="Refresh" CONTENT="2; url=creation.php">
+	 <?php } ?>
+	
 
     <?php include "includes/footer.php"; ?>
 

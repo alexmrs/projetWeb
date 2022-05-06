@@ -17,26 +17,29 @@
     <?php include "includes/header.php"; ?>
 
     <body>
-
-    <?php 
-    //récupérer le titre de l'histoire grâce à l'id en URL
-    $requete = "SELECT titre FROM histoire WHERE id=:id_histoire"; 
-    $response = $BDD->prepare($requete);
-    $response->execute(array(
-    "id_histoire" => $_GET['id'] ));
-    $ligne = $response->fetch(); 
-    ?> 
  
     <div class="centre">
         <br>
-        <h2>Êtes-vous sûr de vouloir supprimer "<?=$ligne["titre"]?>" ?</h2>
-        <p>Attention, la suppresion d'une histoire est définitive.</p>
-        <br>
-        <a class="btn btn-primary btn-danger" href="supprimer_sur.php?id=<?=$_GET['id']?>" role="button">Supprimer</a>
-        <a class="btn btn-primary btn-primary" href="administrateur.php" role="button">Retour</a>
-
+        <h2>Créez une nouvelle histoire.</h2>
     </div>
-
+    
+    <div class="form_creation">
+        <form action="creation_detaillee.php" method="post">
+            <div class="mb-3">
+                <label for="titre" class="form-label">Titre de l'histoire</label>
+                <input type="text" class="form-control" id="titre" name="titre" placeholder="">
+            </div>
+            <br>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <input class="form-control" id="description" name="description" rows="3" placeholder="Décrivez votre histoire en 1 ou 2 phrases."></input>
+            </div>
+            <br>
+            <div class="d-grid gap-2 col-4 mx-auto">
+            <button class="btn btn-success" type="submit">Créer</button>
+            </div>
+        </form>
+    </div>
     
 
        

@@ -25,25 +25,25 @@
     $response->execute(array(
     "id_histoire" => $_GET['id'] ));
     $ligne = $response->fetch();
+
     ?> 
 
     <div class="centre">
         <h2><?=$ligne['titre']?> a été supprimé.</h2>
+        <a href="administrateur.php">Retour</a>
     </div>
 
     <?php
-    //Supprimer l'histoire de toutes les tables
 
-    //table histoire, chapitre, choix, progression
-    //pour choix : récupérer tous les chapitres qui sont liés à cette histoire
+    //Supprimer l'histoire de toutes les tables
+    // Supprime aussi dans les tables chapitre, choix et progression car la suppression se fait en cascade
     $requete = 'DELETE FROM histoire WHERE id=:id';
     $response = $BDD->prepare($requete);
     $response->execute(array(
     'id' => $_GET['id'] ));
+    
+    ?> 
 
-    ?>
-
-       
     <?php include "includes/footer.php"; ?>
 
 
