@@ -42,7 +42,24 @@
 	margin: auto;
 }
 
+
 .droite
 {
 	float : right;
+}
+
+
+/* mise en page du contenu du chapitre */
+.contenuChap
+{
+	text-align : center;
+	width : 50%;
+	margin: auto;
+}
+
+
+/*mise en page des choix du chapitre */
+.choix{
+	background-color:darkolivegreen;
+	color:white;
 }

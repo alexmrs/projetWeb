@@ -12,7 +12,6 @@
         <link href="style.css" rel="stylesheet">
 
         <title>StoryTime </title>
-        <link href="moz-extension://6de86387-081d-400c-96ba-2e32fcf69c81/styles/host.css" rel="stylesheet">
     </head>
     <?php include "includes/header.php"; ?>
 
@@ -32,7 +31,7 @@
 
             if($resultatProgr->rowCount()==0){
                 // Ajoute une ligne de progression pour l'histoire en question si l'utilisateur n'en a pas
-                $requeteAjout="INSERT INTO progression (id_utilisateur,id_histoire,id_chapitre) VALUES (:id_utilisateur,:id_histoire,id_chapitre)";
+                $requeteAjout="INSERT INTO progression (id_utilisateur,id_histoire,id_chapitre) VALUES (:id_utilisateur,:id_histoire,:id_chapitre)";
                 $resultatReq=$BDD->prepare($requeteAjout);
                 $resultatReq->execute(array(
                     'id_utilisateur'=>$_SESSION["idUtil"],
@@ -40,9 +39,12 @@
                     'id_chapitre'=>1
                 ));
                 // Rajoute +1 au nombre de lecture de l'histoire pour les statistiques
-                $reqLecture="INSERT INTO histoire (nb_lecture) VALUES (:plusUn)";
+                $reqLecture="UPDATE histoire SET nb_lecture=? WHERE titre=?";
                 $resultatReq=$BDD->prepare($reqLecture);
-                $resultatReq->execute(array('plusUn'=>$histoire["nb_lecture"]+1));
+                $resultatReq->execute(array(
+                    $histoire["nb_lecture"]+1,
+                    $_SESSION["titre"]
+                ));
                 $chapitreActuel=1;
             }
             else{
@@ -61,9 +63,19 @@
             $resReqChoix->execute(array($chapitre["id"]));
             $choix= $resReqChoix->fetchAll();
         }?>
-        <h1 class="centre"><?=$_SESSION["titre"] ?></h1>
-        <div class="centre">
+        <h2 class="centre"><?=$_SESSION["titre"] ?></h2>
+        <br/>
+        <br/>
+        <div class="contenuChap">
             <?=$chapitre["contenu"]?>
+        </div>
+        <div class="container">
+            <?php
+                foreach($choix as $key =>$ligne){ ?>
+                    <a class="choix" href="<?=$ligne["chapitre_vise"]?>"><?=$ligne["contenu_choix"]?></a>
+            <?php
+                } 
+            ?>
         </div>
         
         
