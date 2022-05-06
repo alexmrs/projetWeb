@@ -16,13 +16,26 @@
     <?php include "includes/header.php"; ?>
 
     <body>
-        <?php if(isset($_GET["titre"])){
+        <?php 
+        if(isset($_GET["titre"])){
             $_SESSION["titre"]=escape($_GET["titre"]);
             $requete="SELECT * FROM histoire WHERE titre=?"; // Requête SQL
             $resultatHist=$BDD->prepare($requete); // Preparation de la requête SQL
             $resultatHist->execute(array($_SESSION["titre"])); // Execute la requête 
             $histoire=$resultatHist->fetch();
             $_SESSION["idHist"]=$histoire["id"]; // Définit l'id de l'histoire entrain d'être lu
+            
+            // Modifie la progression de l'utilisateur
+            if(isset($_GET["chapitre"])){
+                $chapitre=escape($_GET["chapitre"]);
+                $updateProgr="UPDATE progression SET id_chapitre=? WHERE id_utilisateur=? AND id_histoire=?";
+                $resultatReq=$BDD->prepare($updateProgr);
+                $resultatReq->execute(array(
+                    $chapitre,
+                    $_SESSION["idUtil"],
+                    $_SESSION["idHist"]
+                ));
+            }
 
             $requete="SELECT * FROM progression WHERE id_utilisateur=? AND id_histoire=?"; // Requête SQL
             $resultatProgr=$BDD->prepare($requete); // Preparation de la requête SQL
@@ -47,7 +60,7 @@
                 ));
                 $chapitreActuel=1;
             }
-            else{
+            else{   
                 $chapitreActuel=$progressionHist["id_chapitre"];
             }
             
@@ -69,17 +82,55 @@
         <div class="contenuChap">
             <?=$chapitre["contenu"]?>
         </div>
+    </br>
         <div class="container">
             <?php
                 foreach($choix as $key =>$ligne){ ?>
-                    <a class="choix" href="<?=$ligne["chapitre_vise"]?>"><?=$ligne["contenu_choix"]?></a>
+                    </br>
+                    </br>
+                    <a class="btn btn-primary btn-success" href="chapitre.php?titre=<?=$_SESSION["titre"]?>&chapitre=<?=$ligne["id_chapitre_vise"]?>" ><?=$ligne["contenu_choix"]?> </a>
             <?php
                 } 
+                // Lorsqu'un chapitre est perdant ou gagnant dans une histoire
+                if($chapitre["gagnant_perdant"]==2 or $chapitre["gagnant_perdant"]==1){?>
+                    <div class="centre">
+                    <p>L'histoire est terminé pour vous, vous pouvez la recommencer</p>
+
+                    <?php // Suppression de la progression pour que l'utilisateur puisse recommencer l'histoire
+                    $reqSupProgr="DELETE FROM progression WHERE id_utilisateur=? AND id_histoire=?";
+                    $suppr=$BDD->prepare($reqSupProgr);
+                    $suppr->execute(array(
+                    $_SESSION["idUtil"],
+                    $_SESSION["idHist"]
+                    ));
+                    if($chapitre["gagnant_perdant"]==2){
+                        $reqLecture="UPDATE histoire SET nb_perdu=? WHERE titre=?";
+                        $resultatReq=$BDD->prepare($reqLecture);
+                        $resultatReq->execute(array(
+                        $histoire["nb_perdu"]+1,
+                        $_SESSION["titre"]
+                        ));
+                    }
+                    if($chapitre["gagnant_perdant"]==1){
+                        $reqLecture="UPDATE histoire SET nb_gagne=? WHERE titre=?";
+                        $resultatReq=$BDD->prepare($reqLecture);
+                        $resultatReq->execute(array(
+                        $histoire["nb_gagne"]+1,
+                        $_SESSION["titre"]
+                        ));
+                    }?>
+
+                    <!-- Bouton qui renvoie au premier chapitre de l'histoire  -->
+                    <a class="btn btn-secondary" href="chapitre.php?titre=<?=$_SESSION["titre"]?>">Rejouer</a>
+
+                    <!-- Bouton qui renvoie à la page index  -->
+                    <a class="btn btn-secondary centre" href="index.php">Revenir à l'acceuil</a>
+                    </div>
+                <?php
+                }
             ?>
+            
         </div>
-        
-        
-        
         <?php include "includes/footer.php"; ?>
     </body>
 </html>
