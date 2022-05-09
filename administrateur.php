@@ -41,7 +41,7 @@
                         <?=$ligne["titre"]?>
 
                         <div class="droite">
-                        <a class="btn btn-primary btn-warning" href="modifier.php" role="button">Modifier</a>
+                        <a class="btn btn-primary btn-warning" href="modifier.php?id=<?=$ligne["id"]?>" role="button">Modifier</a>
                         <a class="btn btn-primary btn-danger" href="supprimer.php?id=<?=$ligne["id"]?>" role="button">Supprimer</a>
                         </div>
                         </li>

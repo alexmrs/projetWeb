@@ -14,4 +14,9 @@ function UtilisateurAdministrateur() {
 function escape($value) {
     return htmlspecialchars($value, ENT_QUOTES, 'UTF-8', false);
 }
+
+// Récupère l'histoire sélectionnée dans le formulaire de modification
+function contenuChapSelect($ligne){
+    $_SESSION["contenuChap"]=$ligne["contenu"];
+}
 ?>
