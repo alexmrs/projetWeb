@@ -70,3 +70,11 @@
 	background-color:darkolivegreen;
 	color:white;
 }
+
+/* mise en page du contenu de la modification de l'histoire */ /* marche pas*/
+.modifHist
+{
+	text-align : center;
+	margin: auto;
+	background-color:aquamarine;
+}

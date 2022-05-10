@@ -18,7 +18,7 @@
         <br> <br>
         <p>Ce site a été créé dans le cadre du projet de Communication Web de l'ENSC. Il a été réalisé par Alexandra MOURAS et Noah RICHERT.</p> <p>ENSC 1A Groupe 4 - 2021/2022</p>
         <br> <br>
-         <img src="images/logoEnsc.jpg" alt="logo ENSC>
+         <img src="images/logoEnsc.jpg" alt="logo ENSC">
     </div>
     </body>
 
