@@ -32,7 +32,7 @@
             <br>
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
-                <input class="form-control" id="description" name="description" rows="3" placeholder="Décrivez votre histoire en 1 ou 2 phrases."></input>
+                <textarea class="form-control" id="description" name="description" rows="3" placeholder="Décrivez votre histoire en 1 ou 2 phrases."></textarea>
             </div>
             <br>
             <div class="d-grid gap-2 col-4 mx-auto">

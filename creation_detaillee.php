@@ -40,8 +40,11 @@ require_once("includes/connect.php");
 
 	 ?>
 
-	  <h3 class="centre">L'histoire "<?php echo $titre;?>" a bien été créée !</h3>
+		<h3>Créez vos chapitres</h3>
+	 	<h5 class="centre">L'histoire "<?php echo $titre;?>" a bien été créée !</h5>
 	 <?php }
+
+	 // bouton ajouter qui renvoie vers la même page en ajoutant un paragraphe
 
 	 else 
 	 {?>
