@@ -1,6 +1,11 @@
 #navbar
 {
-	margin-bottom: 10px;
+	margin-bottom: 15px;
+}
+
+#footer
+{
+	padding-top: 5%;
 }
 
 .apropos
