@@ -22,36 +22,37 @@ require_once("includes/connect.php");
 
     <body>
 
-    <?php 
+	 	<div class="centre">
+		<h2>Créez les chapitres de "<?php echo $titre;?>"</h2>
+		<p>Dans un second temps, vous saisirez toutes les options des chapitres.</p>
+		</div>
 
-    $auteur = $_SESSION['pseudo'];
+		<?php
 
-    if (!empty($_POST['titre']) && !empty($_POST['description']))
-	{
-	    $titre = $_POST['titre'];
-	    $description = $_POST['description'];
-	   
+		$compteur = $_GET['cpt'];
 
-		$req = $BDD->prepare("INSERT INTO histoire (titre, auteur, description) VALUES (:titre, :auteur, :description)");
-		$req->execute(array(
-		'titre' => $titre,
-		'auteur' => $auteur, 
-		'description'=> $description)); 
+		?> <form method="POST" action=""> <?php
 
-	 ?>
+		for ($i=$compteur; $i<($compteur+5); $i++)
+		{?>
+			
+			<div class="form_creation">
+				<div class="mb-3">
+					<h5>Chapitre <?php echo $i;?></h5>
+	                <textarea class="form-control" id="chapitre" name="chapitre" rows="4" placeholder="Saisissez le contenu du chapitre."></textarea>
+	            </div>
+        	</div>
+		<?php } 
 
-		<h3>Créez vos chapitres</h3>
-	 	<h5 class="centre">L'histoire "<?php echo $titre;?>" a bien été créée !</h5>
-	 <?php }
+		// bouton ajouter qui renvoie vers la même page en ajoutant un paragraphe ?>
 
-	 // bouton ajouter qui renvoie vers la même page en ajoutant un paragraphe
+		<div class="centre">
+		 <a class="btn btn-primary btn-primary" href="creation_detaillee.php?cpt=<?= $compteur+5 ?>" role="button">Ajouter + de chapitres </a>
+		</div>
 
-	 else 
-	 {?>
-	 	<br>
-	 	<h2 class="centre">Veuillez saisir un titre et une description.</h2>
-	 	<META http-EQUIV="Refresh" CONTENT="2; url=creation.php">
-	 <?php } ?>
+		</form>
+
+	 
 	
 
     <?php include "includes/footer.php"; ?>

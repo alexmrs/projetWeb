@@ -17,14 +17,38 @@
     <?php include "includes/header.php"; ?>
 
     <body>
+
+    <?php
+    // insérer dans la BDD la nouvelle histoire
+
+    $auteur = $_SESSION['pseudo'];
+
+    if (!empty($_POST['titre']) && !empty($_POST['description']))
+    {
+        $titre = $_POST['titre'];
+        $description = $_POST['description'];
+
+        $req = $BDD->prepare("INSERT INTO histoire (titre, auteur, description) VALUES (:titre, :auteur, :description)");
+        $req->execute(array(
+        'titre' => $titre,
+        'auteur' => $auteur, 
+        'description'=> $description)); 
+
+        ?> <META http-EQUIV="Refresh" CONTENT="0; url=creation_detaillee.php?cpt=1"> <?php
+    }?>
+
  
+
+   
+
     <div class="centre">
         <br>
         <h2>Créez une nouvelle histoire.</h2>
+        <p>Veuillez saisir un titre et une description.</p>
     </div>
     
     <div class="form_creation">
-        <form action="creation_detaillee.php" method="post">
+        <form action="creation.php" method="post">
             <div class="mb-3">
                 <label for="titre" class="form-label">Titre de l'histoire</label>
                 <input type="text" class="form-control" id="titre" name="titre" placeholder="">
