@@ -34,7 +34,7 @@
         'description'=> $description)); 
     
 
-        ?> <META http-EQUIV="Refresh" CONTENT="0; url=creation_detaillee.php?titre=<?php echo $titre;?>">
+        ?> <META http-EQUIV="Refresh" CONTENT="0; url=creation_chapitre.php?titre=<?php echo $titre;?>">
     <?php }?>
  
 
