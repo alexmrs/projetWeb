@@ -19,24 +19,23 @@
     <body>
 
     <?php
-    // insérer dans la BDD la nouvelle histoire
-
+    // Insérer dans la BDD la nouvelle histoire et rediriger vers la page de création des chapitres
     $auteur = $_SESSION['pseudo'];
-
     if (!empty($_POST['titre']) && !empty($_POST['description']))
     {
         $titre = $_POST['titre'];
         $description = $_POST['description'];
 
+        //Insérer dans la table histoire
         $req = $BDD->prepare("INSERT INTO histoire (titre, auteur, description) VALUES (:titre, :auteur, :description)");
         $req->execute(array(
         'titre' => $titre,
         'auteur' => $auteur, 
         'description'=> $description)); 
+    
 
-        ?> <META http-EQUIV="Refresh" CONTENT="0; url=creation_detaillee.php?cpt=1"> <?php
-    }?>
-
+        ?> <META http-EQUIV="Refresh" CONTENT="0; url=creation_detaillee.php?titre=<?php echo $titre;?>">
+    <?php }?>
  
 
    
