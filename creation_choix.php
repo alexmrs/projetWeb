@@ -23,18 +23,36 @@ require_once("includes/connect.php");
     <body>
 
     	<?php
-    	//Récupère le compteur de chapitre + titre de l'histoire dans l'URL
+    	//Récupère le compteur de chapitre + id + titre de l'histoire dans l'URL
 		if (!empty($_GET['cpt']) && !empty($_GET['id']) && !empty($_GET['titre']))
 		{
 			$id_histoire = $_GET['id'];
 			$compteur = $_GET['cpt'];
 			$titre_histoire = $_GET['titre'];
+		}
+
+
+
+		//Récupère et insère les chapitres dans la table chapitre
+		for ($i=1; $i<$compteur; $i++)
+		{
+			if (!empty($_POST['chapitre'.$i]))
+			{
+				$contenu = $_POST['chapitre'.$i];
+			
+			
+			$req = $BDD->prepare("INSERT INTO chapitre (num_chapitre, contenu, id_histoire) VALUES (:num_chap, :contenu, :id_hist)");
+        	$req->execute(array(
+        	'num_chap' => $i,
+        	'contenu' => $contenu, 
+        	'id_hist'=> $id_histoire)); 
+        	}
 		}?>
 
-
 	 	<div class="centre">
-		<h2>Créez les options et choisissez les issues de chaque chapitre.</h2>
-		<?php echo $titre_histoire.$compteur.$id_histoire ;?>
+	 	<h2>Ajoutez les choix de chaque chapitre</h2>
+		<p>Créez les options et choisissez les issues de chaque chapitre.</p>
+		<!-- test <?php echo $titre_histoire.$compteur.$id_histoire ;?> -->
 		</div>
 
 	 

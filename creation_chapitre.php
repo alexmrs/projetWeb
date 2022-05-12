@@ -48,8 +48,8 @@ require_once("includes/connect.php");
 
 
 	 	<div class="centre">
-		<h2>Créez les chapitres de "<?= $titre_histoire ;?>"</h2>
-		<p>Dans un second temps, vous saisirez toutes les options des chapitres.</p>
+		<h2>Ajoutez les chapitres de "<?= $titre_histoire ;?>"</h2>
+		<p>Dans un second temps, vous ajouterai toutes les options des chapitres.</p>
 		</div>
 
 		<!-- Demander le nombre de chapitre à l'auteur -->
@@ -82,7 +82,7 @@ require_once("includes/connect.php");
 
 		// Valider les chapitres ?>
 		<div class="centre">
-			<button type="submit" class="btn btn-info">Valider</button>
+			<button type="submit" class="btn btn-info">Enregistrer</button>
 		 <!-- <a class="btn btn-info btn-info" href="creation_detaillee.php?cpt=<?php echo ($compteur);?>&id=<?=$id_histoire['id'];?>&titre=<?=$titre_histoire;?>" role="button">Valider</a> -->
 		</div>
 		</form>
