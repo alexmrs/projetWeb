@@ -44,7 +44,7 @@ require_once("includes/connect.php");
 			
 		} 
 
-		?> 
+		?>
 
 
 	 	<div class="centre">
@@ -69,7 +69,7 @@ require_once("includes/connect.php");
 		
 
 		<!-- Saisir le contenu des chapitres et l'envoyer -->
-		<form method="POST" action="creation_choix.php?cpt=<?=$compteur;?>&id=<?=$id_histoire['id'];?>&titre=<?=$titre_histoire;?>"> <?php
+		<form method="POST" action="creation_choix.php?cpt=<?=$compteur;?>&id=<?=$id_histoire['id'];?>"> <?php
 		for ($i=1; $i<$compteur; $i++)
 		{?>	
 			<div class="form_creation">
@@ -83,11 +83,9 @@ require_once("includes/connect.php");
 		// Valider les chapitres ?>
 		<div class="centre">
 			<button type="submit" class="btn btn-info">Enregistrer</button>
-		 <!-- <a class="btn btn-info btn-info" href="creation_detaillee.php?cpt=<?php echo ($compteur);?>&id=<?=$id_histoire['id'];?>&titre=<?=$titre_histoire;?>" role="button">Valider</a> -->
 		</div>
 		</form>
 
-	 
 	
     <?php include "includes/footer.php"; ?>
 
