@@ -17,9 +17,30 @@
     <?php include "includes/header.php"; ?>
 
     <body>
-
+	<?php // Récupère toutes les histoires
+	$reqHist="SELECT * FROM histoire";
+	$exeHist=$BDD->prepare($reqHist);
+	$exeHist->execute(array());
+	?>
 
     <div class="row">
+		<?php foreach($exeHist as $key=>$histoire){
+			?>
+			<div class="card bg-dark text-white" id="carte">
+				<div class="card-img-overlay">
+					<h5 class="card-title" style="background-color:black "> <?=$histoire["titre"]?> </h5>
+					<p class="card-text" style="background-color:black "><?=$histoire["description"]?></p>
+					<a class="btn btn-info"  <?php if(UtilisateurConnecte()){?>href="chapitre.php?titre=<?=$histoire['titre']?>" <?php } ?> role="button">Lire </a>
+					<a class="btn btn-danger"  <?php if(UtilisateurConnecte()){?>href="recommencer_histoire.php?id=<?=$histoire['id']?>&titre=<?=$histoire["titre"]?>" <?php } ?> role="button">Recommencer l'histoire</a>
+				</div>
+				<?php if(!empty($histoire["image"])) {?>
+					<img src="<?=$histoire["image"]?>" class="card-img" alt="..." id="photoHistoire">
+				<?php }
+				else{ ?>
+					<img src="https://www.bibliotheque-conde.fr/vendors/richfilemanager/connectors/php/filemanager.php?mode=readfile&path=%2FA_la_une_pas_suppr%2Fcabinet_livres.jpg&time=1645617179024" class="card-img" alt="..." id="photoHistoire">
+				<?php } ?>
+			</div>
+		<?php }?>
         <div class="card bg-dark text-white" id="carte">
 		  <img src="images/histoires/abracalamar.jpg" class="card-img" alt="..." id="photoHistoire">
 		  <div class="card-img-overlay">
