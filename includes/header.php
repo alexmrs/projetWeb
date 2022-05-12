@@ -22,7 +22,7 @@ require_once("function.php");
              $resultat->execute(array()); // Récupère toutes les informations concernant les histoires
              $tab=$resultat->fetchAll(); // Crée un   tableau avec les informations 
              foreach($tab as $key => $ligne){ // Parcourt le tableau?> 
-              <li><a class="dropdown-item" <?php if(UtilisateurConnecte()){?>href="chapitre.php?titre=<?=$ligne['titre']?>" <?php } ?> ><?=$ligne["titre"]?></a></li> <!--Comment récupérer le numéro de chapitre? POST ? GET? faire du java? nope requete PHP-->
+              <li><a class="dropdown-item" <?php if(UtilisateurConnecte()){?>href="chapitre.php?titre=<?=$ligne['titre']?>" <?php } ?> ><?=$ligne["titre"]?></a></li>
             <?php }?>
           </ul>
         </li>

@@ -49,7 +49,7 @@
                 $resultatReq->execute(array(
                     'id_utilisateur'=>$_SESSION["idUtil"],
                     'id_histoire'=>$_SESSION["idHist"],
-                    'id_chapitre'=>1
+                    'id_chapitre'=>1,
                 ));
                 // Rajoute +1 au nombre de lecture de l'histoire pour les statistiques
                 $reqLecture="UPDATE histoire SET nb_lecture=? WHERE titre=?";
@@ -75,6 +75,25 @@
             $resReqChoix=$BDD->prepare($reqChoix);
             $resReqChoix->execute(array($chapitre["id"]));
             $choix= $resReqChoix->fetchAll();
+
+            // Récupère le chemin effectué durant l'histoire
+            $reqSupProgr="SELECT suivi_histoire FROM progression WHERE id_utilisateur=? AND id_histoire=?";
+            $suivi=$BDD->prepare($reqSupProgr);
+            $suivi->execute(array(
+            $_SESSION["idUtil"],
+            $_SESSION["idHist"]
+            ));
+            $suiviRes=$suivi->fetch();
+                    
+            // Met à jour le contenu du suivi
+            $reqMajSuivi="UPDATE progression SET suivi_histoire=? WHERE id_utilisateur=? AND id_histoire=?";
+            $resMajSuivi=$BDD->prepare($reqMajSuivi);
+            $resMajSuivi->execute(array(
+                $suiviRes["suivi_histoire"].$chapitre["contenu"]."->",
+                $_SESSION["idUtil"],
+                $_SESSION["idHist"]
+            ));
+
         }?>
         <h2 class="centre"><?=$_SESSION["titre"] ?></h2>
         <br/>
@@ -94,8 +113,18 @@
                 // Lorsqu'un chapitre est perdant ou gagnant dans une histoire
                 if($chapitre["gagnant_perdant"]==2 or $chapitre["gagnant_perdant"]==1){?>
                     <div class="centre">
+                    <?php // Récupère le chemin effectué durant l'histoire
+                        $reqSupProgr="SELECT suivi_histoire FROM progression WHERE id_utilisateur=? AND id_histoire=?";
+                        $suivi=$BDD->prepare($reqSupProgr);
+                        $suivi->execute(array(
+                        $_SESSION["idUtil"],
+                        $_SESSION["idHist"]
+                        ));
+                        $suiviRes=$suivi->fetch(); 
+                    ?>
+                    <p> Voici ton histoire : </p>
+                    <?=$suiviRes["suivi_histoire"] ?>
                     <p>L'histoire est terminé pour vous, vous pouvez la recommencer</p>
-
                     <?php // Suppression de la progression pour que l'utilisateur puisse recommencer l'histoire
                     $reqSupProgr="DELETE FROM progression WHERE id_utilisateur=? AND id_histoire=?";
                     $suppr=$BDD->prepare($reqSupProgr);
