@@ -15,7 +15,7 @@ require_once("includes/connect.php");
 		
         <link href="style.css" rel="stylesheet">
 
-        <title>Créez votre histoire</title>
+        <title>Créez vos chapitres</title>
         
     </head>
     <?php include "includes/header.php"; ?>
@@ -53,7 +53,7 @@ require_once("includes/connect.php");
 		</div>
 
 		<!-- Demander le nombre de chapitre à l'auteur -->
-        <form action="creation_detaillee.php?id=<?=$id_histoire['id'];?>&titre=<?=$titre_histoire;?>" method="post">  
+        <form action="creation_chapitre.php?id=<?=$id_histoire['id'];?>&titre=<?=$titre_histoire;?>" method="post">  
 		<div class="row g-3 align-items-center">
 		  <div class="col-auto">
 		    <label for="nb_chapitre" class="col-form-label">Nombre de chapitre : </label>
@@ -69,7 +69,7 @@ require_once("includes/connect.php");
 		
 
 		<!-- Saisir le contenu des chapitres et l'envoyer -->
-		<form method="POST" action=""> <?php
+		<form method="POST" action="creation_choix.php?cpt=<?=$compteur;?>&id=<?=$id_histoire['id'];?>&titre=<?=$titre_histoire;?>"> <?php
 		for ($i=1; $i<$compteur; $i++)
 		{?>	
 			<div class="form_creation">
