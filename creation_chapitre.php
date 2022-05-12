@@ -49,16 +49,13 @@ require_once("includes/connect.php");
 
 		if (!empty($_GET['verif']))
 		{
-			echo "coucou";
-
+			$nb_chapitre =0;
 			for ($i=1; $i<$compteur; $i++)
 			{
 				if (!empty($_POST['chapitre'.$i]))
 				{
 					$contenu = $_POST['chapitre'.$i];
-					echo "salut";
-					echo $contenu;
-				
+					$nb_chapitre = $nb_chapitre +1;
 				$req = $BDD->prepare("INSERT INTO chapitre (num_chapitre, contenu, id_histoire) VALUES (:num_chap, :contenu, :id_hist)");
 	        	$req->execute(array(
 	        	'num_chap' => $i,
@@ -67,7 +64,7 @@ require_once("includes/connect.php");
 	        	}
 			}
 
-			?><META http-EQUIV="Refresh" CONTENT="0; url=creation_choix.php?cpt=<?=$compteur;?>&id=<?=$id_histoire;?>&chap=0"> <?php
+			?><META http-EQUIV="Refresh" CONTENT="0; url=creation_choix.php?cpt=<?=$nb_chapitre;?>&id=<?=$id_histoire;?>&chap=0"> <?php
 
 		}
 		?>

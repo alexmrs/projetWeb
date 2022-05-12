@@ -29,24 +29,22 @@ require_once("includes/connect.php");
 			$id_histoire = $_GET['id'];
 			$compteur = $_GET['cpt'];
 			$chap = $_GET['chap'];
-		 echo $id_histoire;
+		 
 
 		//Récupère les chapitres concernés dans la table chapitre
-		$requete = "SELECT id, num_chapitre FROM chapitre WHERE id_histoire=:id_hist"; 
+		$requete = "SELECT * FROM chapitre WHERE id_histoire=:id_hist"; 
         $response = $BDD->prepare($requete);
         $response->execute(array(
         "id_hist" => $id_histoire ));
-        $chapitre = $response->fetch(); 
+        $chapitre = $response->fetchAll();
     	}
         //Récupère le numéro et id du chapitre qu'on traite actuellement
         
         $id_chapitre =  $chapitre[$chap]['id'] ;
         $num_chapitre =  $chapitre[$chap]['num_chapitre'] ;
 
-        echo $chapitre;
-        echo $id_histoire;
-        echo $id_chapitre;
-        echo $num_chapitre;
+        
+        echo "chapitre actuel : ".$num_chapitre;
         echo "compteur :".$compteur;
 
         //Récupère le nombre d'options choisi pour ce chapitre
@@ -56,8 +54,36 @@ require_once("includes/connect.php");
 			$nb_choix = $_POST['nb_choix'] + 1;
 			
 		}
+
+		//Insère le contenu des choix du chapitre précédent dans la base
+		
+			echo "nb choix : ".$nb_choix;
+
+			for ($i=1; $i<$nb_choix; $i++)
+			{
+				if (!empty($_POST['contenu_choix'.$i]))
+				{
+					
+					$contenu = $_POST['contenu_choix'.$i];
+					$chap_choix = $_POST['chap_choix'.$i];
+					echo "salut";
+					echo $contenu;
+					echo $chapitre[$chap -1]['id'];
+
+					echo $chap_choix;
+				
+					$req = $BDD->prepare("INSERT INTO choix (id_chapitre, contenu_choix, id_chapitre_vise) VALUES (:id_chap, :contenu, :id_chap_vise)");
+		        	$req->execute(array(
+		        	'id_chap' => $chapitre[$chap -1]['id'],
+		        	'contenu' => $contenu, 
+		        	'id_chap_vise'=> $chap_choix)); 
+
+	        	}
+			}
+
 		?>
 
+		<?php echo "coucou";?>
 	 	<div class="centre">
 	 	<h2>Ajoutez les choix de chaque chapitre</h2>
 		<p>Créez les options et choisissez les issues de chaque chapitre.</p>
@@ -81,24 +107,26 @@ require_once("includes/connect.php");
 		  </div>
 		</div>
 		</form>
-
-		<?php echo $nb_choix ;?>
 		
-		
-		<form method="POST" action="creation_choix.php?cpt=<?=$compteur;?>&id=<?=$id_histoire['id'];?>&chap=<?=$chap+1;?>"> <?php
+		<!-- Saisie de chaque choix + le chapitre où il mène -->
+		<form method="POST" action="creation_choix.php?cpt=<?=$compteur;?>&id=<?=$id_histoire;?>&chap=<?=$chap+1;?>&nb_choix=<?=$nb_choix;?>"> <?php
 		for ($i=1; $i<$nb_choix; $i++)
 		{?>	
 			<div class="form_creation">
 				<div class="mb-3">
 					<h5>Choix <?php echo $i;?></h5>
-					<select class="form-select" aria-label="Default select example">
-					  <option selected>Open this select menu</option>
-					  <option value="1">One</option>
-					  <option value="2">Two</option>
-					  <option value="3">Three</option>
+					<select class="form-select" aria-label="Choix du chapitre" name="chap_choix<?=$i;?>">
+						<option selected value="<?= $num_chapitre;?>">Chapitre vers lequel ce choix renvoie</option> <!-- Renvoie par défaut vers le chapitre sur lequel on est -->
+					  	<?php foreach($chapitre as $ligne)
+					  	{
+					  	if ($ligne['num_chapitre'] != $num_chapitre) //Propose tous les autres chapitres
+					  	{?>
+					  	 <option value="<?php echo $ligne['id'];?>">Chapitre <?=$ligne['num_chapitre'];?> - <?=$ligne['contenu'];?></option>
+					  	 
+						<?php }}?>
 					</select>
 					<br>
-	                <textarea class="form-control" id="chapitre" name="chapitre<?=$i;?>" rows="4" placeholder="Saisissez le contenu du choix."></textarea>
+	                <textarea class="form-control" id="choix" name="contenu_choix<?=$i;?>" rows="4" placeholder="Saisissez le contenu du choix."></textarea>
 	            </div>
         	</div>
 		<?php } 
