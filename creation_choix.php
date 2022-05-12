@@ -21,41 +21,41 @@ require_once("includes/connect.php");
     <?php include "includes/header.php"; ?>
 
     <body>
-
-    	
+	
     	<?php
-    	//Récupère le compteur de chapitre + id + titre de l'histoire dans l'URL
-		if (!empty($_GET['cpt']) && !empty($_GET['id']))
+    	//Récupère le compteur de chapitre + id dans l'URL
+		if (isset($_GET['cpt']) && isset($_GET['id']) && isset($_GET['chap']))
 		{
 			$id_histoire = $_GET['id'];
 			$compteur = $_GET['cpt'];
-			
-		}
-
-		//Récupère et insère les chapitres dans la table chapitre
-		for ($i=1; $i<$compteur; $i++)
-		{
-			if (!empty($_POST['chapitre'.$i]))
-			{
-				$contenu = $_POST['chapitre'.$i];
-			
-			
-			$req = $BDD->prepare("INSERT INTO chapitre (num_chapitre, contenu, id_histoire) VALUES (:num_chap, :contenu, :id_hist)");
-        	$req->execute(array(
-        	'num_chap' => $i,
-        	'contenu' => $contenu, 
-        	'id_hist'=> $id_histoire)); 
-        	}
-		}
+			$chap = $_GET['chap'];
+		 echo $id_histoire;
 
 		//Récupère les chapitres concernés dans la table chapitre
 		$requete = "SELECT id, num_chapitre FROM chapitre WHERE id_histoire=:id_hist"; 
         $response = $BDD->prepare($requete);
         $response->execute(array(
         "id_hist" => $id_histoire ));
-        $chapitre = $response->fetchAll(); 
+        $chapitre = $response->fetch(); 
+    	}
+        //Récupère le numéro et id du chapitre qu'on traite actuellement
+        
+        $id_chapitre =  $chapitre[$chap]['id'] ;
+        $num_chapitre =  $chapitre[$chap]['num_chapitre'] ;
 
-        echo $chapitre[0]['id'] ;
+        echo $chapitre;
+        echo $id_histoire;
+        echo $id_chapitre;
+        echo $num_chapitre;
+        echo "compteur :".$compteur;
+
+        //Récupère le nombre d'options choisi pour ce chapitre
+        $nb_choix =4;
+        if (isset($_POST['nb_choix']))
+		{
+			$nb_choix = $_POST['nb_choix'] + 1;
+			
+		}
 		?>
 
 	 	<div class="centre">
@@ -64,18 +64,11 @@ require_once("includes/connect.php");
 		<!-- test <?php echo $titre_histoire.$compteur.$id_histoire ;?> -->
 
 		<br>
-		<h3>Chapitre <?=$chapitre[0]['num_chapitre'];?></h3>
+		<h3>Chapitre <?=$num_chapitre;?></h3>
 		</div>
 
-
-		<?php $nb_choix =4;
-        if (isset($_POST['nb_choix']))
-		{
-			$nb_choix = $_POST['nb_choix'] + 1;
-			
-		}?>
 		<!-- Demander le nombre de choix à l'auteur -->
-        <form action="creation_choix.php?cpt=<?=$compteur;?>&id=<?=$id_histoire['id'];?>" method="post">  
+        <form action="creation_choix.php?cpt=<?=$compteur;?>&id=<?=$id_histoire;?>&chap=<?php echo $chap;?>" method="post">  
 		<div class="row g-3 align-items-center">
 		  <div class="col-auto">
 		    <label for="nb_choix" class="col-form-label">Nombre de choix : </label>
@@ -92,7 +85,7 @@ require_once("includes/connect.php");
 		<?php echo $nb_choix ;?>
 		
 		
-		<form method="POST" action="creation_choix.php?cpt=<?=$compteur;?>&id=<?=$id_histoire['id'];?>"> <?php
+		<form method="POST" action="creation_choix.php?cpt=<?=$compteur;?>&id=<?=$id_histoire['id'];?>&chap=<?=$chap+1;?>"> <?php
 		for ($i=1; $i<$nb_choix; $i++)
 		{?>	
 			<div class="form_creation">
@@ -110,7 +103,7 @@ require_once("includes/connect.php");
         	</div>
 		<?php } 
 
-		// Valider les chapitres ?>
+		// Valider les choix ?>
 		<div class="centre">
 			<button type="submit" class="btn btn-info">Enregistrer</button>
 		</div>

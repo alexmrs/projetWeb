@@ -34,7 +34,10 @@ require_once("includes/connect.php");
         $response = $BDD->prepare($requete);
         $response->execute(array(
         "titre" => $titre_histoire ));
-        $id_histoire = $response->fetch(); 
+        $id_hist = $response->fetch(); 
+
+        $id_histoire=$id_hist['id'];
+        echo $id_histoire;
 
         //Compteur du nombre de chapitre
         $compteur =4;
@@ -44,6 +47,29 @@ require_once("includes/connect.php");
 			
 		} 
 
+		if (!empty($_GET['verif']))
+		{
+			echo "coucou";
+
+			for ($i=1; $i<$compteur; $i++)
+			{
+				if (!empty($_POST['chapitre'.$i]))
+				{
+					$contenu = $_POST['chapitre'.$i];
+					echo "salut";
+					echo $contenu;
+				
+				$req = $BDD->prepare("INSERT INTO chapitre (num_chapitre, contenu, id_histoire) VALUES (:num_chap, :contenu, :id_hist)");
+	        	$req->execute(array(
+	        	'num_chap' => $i,
+	        	'contenu' => $contenu, 
+	        	'id_hist'=> $id_histoire)); 
+	        	}
+			}
+
+			?><META http-EQUIV="Refresh" CONTENT="0; url=creation_choix.php?cpt=<?=$compteur;?>&id=<?=$id_histoire;?>&chap=0"> <?php
+
+		}
 		?>
 
 
@@ -53,7 +79,7 @@ require_once("includes/connect.php");
 		</div>
 
 		<!-- Demander le nombre de chapitre à l'auteur -->
-        <form action="creation_chapitre.php?id=<?=$id_histoire['id'];?>&titre=<?=$titre_histoire;?>" method="post">  
+        <form action="creation_chapitre.php?id=<?=$id_histoire;?>&titre=<?=$titre_histoire;?>" method="post">  
 		<div class="row g-3 align-items-center">
 		  <div class="col-auto">
 		    <label for="nb_chapitre" class="col-form-label">Nombre de chapitre : </label>
@@ -69,7 +95,7 @@ require_once("includes/connect.php");
 		
 
 		<!-- Saisir le contenu des chapitres et l'envoyer -->
-		<form method="POST" action="creation_choix.php?cpt=<?=$compteur;?>&id=<?=$id_histoire['id'];?>"> <?php
+		<form method="POST" action="creation_chapitre.php?id=<?=$id_histoire;?>&titre=<?=$titre_histoire;?>&verif=1"> <?php
 		for ($i=1; $i<$compteur; $i++)
 		{?>	
 			<div class="form_creation">
