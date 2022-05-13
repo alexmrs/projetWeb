@@ -67,7 +67,6 @@ require_once("includes/connect.php");
 				if (!empty($_POST['contenu_choix'.$i]))
 				{
 			
-
 					$contenu = $_POST['contenu_choix'.$i];
 					$chap_choix = $_POST['chap_choix'.$i];
 					$test = $chapitre[$chap -1]['id'];

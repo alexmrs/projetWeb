@@ -47,11 +47,13 @@ require_once("includes/connect.php");
 			
 		} 
 
+
 		if (!empty($_GET['verif']))
 		{
-			$nb_chapitre =0;
+			$compteur = $_GET['nb_chapitre'];
 			for ($i=1; $i<$compteur; $i++)
 			{
+				echo $compteur;
 				if (!empty($_POST['chapitre'.$i]))
 				{
 					$contenu = $_POST['chapitre'.$i];
@@ -94,7 +96,7 @@ require_once("includes/connect.php");
 		
 
 		<!-- Saisir le contenu des chapitres et l'envoyer -->
-		<form method="POST" action="creation_chapitre.php?id=<?=$id_histoire;?>&titre=<?=$titre_histoire;?>&verif=1"> <?php
+		<form method="POST" action="creation_chapitre.php?id=<?=$id_histoire;?>&titre=<?=$titre_histoire;?>&verif=1&nb_chapitre=<?=$compteur;?>"> <?php
 		for ($i=1; $i<$compteur; $i++)
 		{?>	
 			<div class="form_creation">

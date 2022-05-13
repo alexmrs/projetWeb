@@ -2,7 +2,7 @@
 require_once("connect.php");
 require_once("function.php");
 ?>
-<nav class="navbar navbar-expand-lg navbar-light" id="navbar">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbar">
   <div class="container-fluid">
     <a class="navbar-brand" href="index.php">
         <img src="images/icones/iconeHistoire.jpg" alt="image Histoire" width="30px" height="30px">
