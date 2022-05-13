@@ -55,11 +55,13 @@ require_once("includes/connect.php");
 				if (!empty($_POST['chapitre'.$i]))
 				{
 					$contenu = $_POST['chapitre'.$i];
+					$type = $_POST['type_chapitre'.$i];
 					$nb_chapitre = $nb_chapitre +1;
-				$req = $BDD->prepare("INSERT INTO chapitre (num_chapitre, contenu, id_histoire) VALUES (:num_chap, :contenu, :id_hist)");
+				$req = $BDD->prepare("INSERT INTO chapitre (num_chapitre, contenu, gagnant_perdant, id_histoire) VALUES (:num_chap, :contenu, :type, :id_hist)");
 	        	$req->execute(array(
 	        	'num_chap' => $i,
-	        	'contenu' => $contenu, 
+	        	'contenu' => $contenu,
+	        	'type' => $type, 
 	        	'id_hist'=> $id_histoire)); 
 	        	}
 			}
@@ -98,6 +100,13 @@ require_once("includes/connect.php");
 			<div class="form_creation">
 				<div class="mb-3">
 					<h5>Chapitre <?php echo $i;?></h5>
+					<select class="form-select" aria-label="Type de chapitre" name="type_chapitre<?=$i;?>">
+						<option selected value="0">Choisissez le type de chapitre</option> <!-- Renvoie par défaut un chapitre normal-->
+					  	<option value="1">Gagnant</option>
+					  	<option value="2">Perdant</option>
+					  	<option value="0">Aucun des deux</option>
+					</select>
+					<br>
 	                <textarea class="form-control" id="chapitre" name="chapitre<?=$i;?>" rows="4" placeholder="Saisissez le contenu du chapitre."></textarea>
 	            </div>
         	</div>

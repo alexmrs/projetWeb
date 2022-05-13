@@ -71,30 +71,13 @@ require_once("includes/connect.php");
 					$contenu = $_POST['contenu_choix'.$i];
 					$chap_choix = $_POST['chap_choix'.$i];
 					$test = $chapitre[$chap -1]['id'];
-					// echo 'Contenu<br>';
-					// echo $contenu;
-					// echo 'Ce quil y a dans la table<br>';
-					// echo $test;
-					// echo 'Choix<br>';
-					// echo $chap_choix;
-					// echo '<br>';
-
 					$req= "req".$i;
-					// echo $req;
-					// echo '<br>';
-				
 
 					$req = $BDD->prepare("INSERT INTO choix (id_chapitre, contenu_choix, id_chapitre_vise) VALUES (?, ?, ?)");
 					$req->execute(array(
 		        	$test,
 		        	$contenu, 
 		        	$chap_choix));
-
-					// echo $BDD -> LastInsertId();
-
-		    
-		   //      	var_dump($req);
-		   //      	echo '<br>';
 
 
 		        	$BDD->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
