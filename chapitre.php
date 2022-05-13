@@ -65,7 +65,7 @@
             }
             
             // Récupère les données du chapitre en cours de lecture
-            $reqChap="SELECT * FROM chapitre WHERE id_histoire=? AND num_chapitre=?";
+            $reqChap="SELECT * FROM chapitre WHERE id_histoire=? AND id=?";
             $resReqChap=$BDD->prepare($reqChap);
             $resReqChap->execute(array($_SESSION["idHist"],$chapitreActuel));
             $chapitre= $resReqChap->fetch();
