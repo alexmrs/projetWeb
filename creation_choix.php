@@ -59,24 +59,51 @@ require_once("includes/connect.php");
 		
 			echo "nb choix : ".$nb_choix;
 
-			for ($i=1; $i<$nb_choix; $i++)
-			{
+			for ($i=1; $i<=$nb_choix; $i++)
+			{	echo "i".$i;
+				
 				if (!empty($_POST['contenu_choix'.$i]))
 				{
-					
+			
+
 					$contenu = $_POST['contenu_choix'.$i];
 					$chap_choix = $_POST['chap_choix'.$i];
-					echo "salut";
+					$test = $chapitre[$chap -1]['id'];
+					echo 'Contenu<br>';
 					echo $contenu;
-					echo $chapitre[$chap -1]['id'];
-
+					echo 'Ce quil y a dans la table<br>';
+					echo $test;
+					echo 'Choix<br>';
 					echo $chap_choix;
+					echo '<br>';
+
+					$req= "req".$i;
+					echo $req;
+					echo '<br>';
 				
-					$req = $BDD->prepare("INSERT INTO choix (id_chapitre, contenu_choix, id_chapitre_vise) VALUES (:id_chap, :contenu, :id_chap_vise)");
-		        	$req->execute(array(
-		        	'id_chap' => $chapitre[$chap -1]['id'],
-		        	'contenu' => $contenu, 
-		        	'id_chap_vise'=> $chap_choix)); 
+
+					$req = $BDD->prepare("INSERT INTO choix (id_chapitre, contenu_choix, id_chapitre_vise) VALUES (?, ?, ?)");
+					$req->execute(array(
+		        	$test,
+		        	$contenu, 
+		        	$chap_choix));
+
+					echo $BDD -> LastInsertId();
+
+		    
+		        	var_dump($req);
+		        	echo '<br>';
+
+
+		        	$BDD->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+ 					$BDD->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+
+ 					if (empty($num_chapitre))
+ 					{
+ 						echo "terminé";
+ 						?><META http-EQUIV="Refresh" CONTENT="0; url=administrateur.php"> <?php
+
+ 					}
 
 	        	}
 			}
