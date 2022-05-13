@@ -44,8 +44,8 @@ require_once("includes/connect.php");
         $num_chapitre =  $chapitre[$chap]['num_chapitre'] ;
 
         
-        echo "chapitre actuel : ".$num_chapitre;
-        echo "compteur :".$compteur;
+        // echo "chapitre actuel : ".$num_chapitre;
+        // echo "compteur :".$compteur;
 
         //Récupère le nombre d'options choisi pour ce chapitre
         $nb_choix =4;
@@ -57,10 +57,11 @@ require_once("includes/connect.php");
 
 		//Insère le contenu des choix du chapitre précédent dans la base
 		
-			echo "nb choix : ".$nb_choix;
+			// echo "nb choix : ".$nb_choix;
 
 			for ($i=1; $i<=$nb_choix; $i++)
-			{	echo "i".$i;
+			{	
+				// echo "i".$i;
 				
 				if (!empty($_POST['contenu_choix'.$i]))
 				{
@@ -69,17 +70,17 @@ require_once("includes/connect.php");
 					$contenu = $_POST['contenu_choix'.$i];
 					$chap_choix = $_POST['chap_choix'.$i];
 					$test = $chapitre[$chap -1]['id'];
-					echo 'Contenu<br>';
-					echo $contenu;
-					echo 'Ce quil y a dans la table<br>';
-					echo $test;
-					echo 'Choix<br>';
-					echo $chap_choix;
-					echo '<br>';
+					// echo 'Contenu<br>';
+					// echo $contenu;
+					// echo 'Ce quil y a dans la table<br>';
+					// echo $test;
+					// echo 'Choix<br>';
+					// echo $chap_choix;
+					// echo '<br>';
 
 					$req= "req".$i;
-					echo $req;
-					echo '<br>';
+					// echo $req;
+					// echo '<br>';
 				
 
 					$req = $BDD->prepare("INSERT INTO choix (id_chapitre, contenu_choix, id_chapitre_vise) VALUES (?, ?, ?)");
@@ -88,11 +89,11 @@ require_once("includes/connect.php");
 		        	$contenu, 
 		        	$chap_choix));
 
-					echo $BDD -> LastInsertId();
+					// echo $BDD -> LastInsertId();
 
 		    
-		        	var_dump($req);
-		        	echo '<br>';
+		   //      	var_dump($req);
+		   //      	echo '<br>';
 
 
 		        	$BDD->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -110,7 +111,6 @@ require_once("includes/connect.php");
 
 		?>
 
-		<?php echo "coucou";?>
 	 	<div class="centre">
 	 	<h2>Ajoutez les choix de chaque chapitre</h2>
 		<p>Créez les options et choisissez les issues de chaque chapitre.</p>

@@ -37,7 +37,7 @@ require_once("includes/connect.php");
         $id_hist = $response->fetch(); 
 
         $id_histoire=$id_hist['id'];
-        echo $id_histoire;
+        // echo $id_histoire;
 
         //Compteur du nombre de chapitre
         $compteur =4;
