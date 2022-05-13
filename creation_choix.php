@@ -56,6 +56,7 @@ require_once("includes/connect.php");
 		}
 
 		//Insère le contenu des choix du chapitre précédent dans la base
+		//Ne fonctionne que pour le premier choix : les infos sont récupérées pour les choix suivants mais pas insérés
 		
 			// echo "nb choix : ".$nb_choix;
 
