@@ -43,13 +43,19 @@
             $progressionHist=$resultatProgr->fetch();
 
             if($resultatProgr->rowCount()==0){
+                // Récupère l'id du premier chapitre de l'histoire
+                $num_chapitre=1;
+                $reqchapDebut="SELECT * FROM chapitre WHERE  num_chapitre=1 AND id_histoire=?";
+                $reschapDebut=$BDD->prepare($reqchapDebut);
+                $reschapDebut->execute(array($_SESSION["idHist"]));
+                $idChapDebut=$reschapDebut->fetch();
                 // Ajoute une ligne de progression pour l'histoire en question si l'utilisateur n'en a pas
                 $requeteAjout="INSERT INTO progression (id_utilisateur,id_histoire,id_chapitre) VALUES (:id_utilisateur,:id_histoire,:id_chapitre)";
                 $resultatReq=$BDD->prepare($requeteAjout);
                 $resultatReq->execute(array(
                     'id_utilisateur'=>$_SESSION["idUtil"],
                     'id_histoire'=>$_SESSION["idHist"],
-                    'id_chapitre'=>1,
+                    'id_chapitre'=>$idChapDebut["id"],
                 ));
                 // Rajoute +1 au nombre de lecture de l'histoire pour les statistiques
                 $reqLecture="UPDATE histoire SET nb_lecture=? WHERE titre=?";
@@ -58,23 +64,21 @@
                     $histoire["nb_lecture"]+1,
                     $_SESSION["titre"]
                 ));
-                $chapitreActuel=1;
+                $chapitreActuel=$idChapDebut["id"];
             }
             else{   
                 $chapitreActuel=$progressionHist["id_chapitre"];
             }
-            
             // Récupère les données du chapitre en cours de lecture
             $reqChap="SELECT * FROM chapitre WHERE id_histoire=? AND id=?";
             $resReqChap=$BDD->prepare($reqChap);
             $resReqChap->execute(array($_SESSION["idHist"],$chapitreActuel));
             $chapitre= $resReqChap->fetch();
-
             // Récupère les choix possibles liés au chapitre
             $reqChoix="SELECT * FROM choix WHERE id_chapitre=?";
             $resReqChoix=$BDD->prepare($reqChoix);
             $resReqChoix->execute(array($chapitre["id"]));
-            $choix= $resReqChoix->fetchAll();
+            $choix= $resReqChoix->fetchAll(); 
 
             // Récupère le chemin effectué durant l'histoire
             $reqSupProgr="SELECT suivi_histoire FROM progression WHERE id_utilisateur=? AND id_histoire=?";
